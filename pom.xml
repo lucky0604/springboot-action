@@ -6,7 +6,7 @@
 
     <groupId>springbootaction</groupId>
     <artifactId>springbootaction</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <!-- 编译级别设置为java1.7 -->
