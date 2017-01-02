@@ -96,6 +96,21 @@
             <artifactId>logback-access</artifactId>
             <version>${logback.version}</version>
         </dependency>
+        <!-- 对json和xml格式的支持 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.5.3</version>
+        </dependency>
+        <!--
+        实际项目中，主要支持json格式数据，没有必要同时支持json和xml，这种情况下，依赖包为：
+        （上面包包含此包）
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.5.3</version>
+        </dependency>
+         -->
     </dependencies>
 
     <build>
