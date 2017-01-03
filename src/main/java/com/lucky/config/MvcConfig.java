@@ -1,15 +1,20 @@
 package com.lucky.config;
 
+import com.lucky.web.DemoInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 /**
  * Created by lucky on 17-1-2.
  */
+/**
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.lucky")
@@ -22,5 +27,42 @@ public class MvcConfig {
         viewResolver.setSuffix(".jsp");
         viewResolver.setViewClass(JstlView.class);
         return viewResolver;
+    }
+}
+*/
+
+// --------------------------------------------------------------
+/*
+Spring MVC的定制配置需要我们的配置类继承一个WebMvcConfigurerAdapter类，并在此类使用@EnableWebMvc注解，来开启对SpringMVC的支持
+此例演示加载静态资源
+ */
+@Configuration
+@EnableWebMvc
+@ComponentScan("com.lucky")
+public class MvcConfig extends WebMvcConfigurerAdapter {
+    @Bean
+    public InternalResourceViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setPrefix("/WEB-INF/classes/views/");
+        viewResolver.setSuffix(".jsp");
+        viewResolver.setViewClass(JstlView.class);
+        return viewResolver;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // addResourceHandler指的是对外暴露的访问路径，addResourceLocations指的是文件放置的路径
+        registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
+    }
+
+    // 拦截器配置
+    @Bean
+    public DemoInterceptor demoInterceptor() {
+        return new DemoInterceptor();
+    }
+    // 重写addInterceptors，注册拦截器
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(demoInterceptor());
     }
 }
