@@ -1,9 +1,11 @@
 package com.lucky.config;
 
+import com.lucky.messageconverter.MyMessageConverter;
 import com.lucky.web.DemoInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+
+import java.util.List;
 
 /**
  * Created by lucky on 17-1-2.
@@ -57,7 +61,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/assets/");
     }
 
-    // 拦截器配置
+    /*
+    拦截器配置
+     */
     @Bean
     public DemoInterceptor demoInterceptor() {
         return new DemoInterceptor();
@@ -74,5 +80,20 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
         multipartResolver.setMaxUploadSize(1000000);
         return multipartResolver;
+    }
+
+    /*
+    HttpMessageConverter配置
+     */
+    // 配置HttpMessageConverter Bean
+    @Bean
+    public MyMessageConverter converter() {
+        return new MyMessageConverter();
+    }
+
+    // 重写extendMessageConverters
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(converter());
     }
 }
