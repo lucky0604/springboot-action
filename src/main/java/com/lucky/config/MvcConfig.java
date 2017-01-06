@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -44,6 +45,7 @@ Spring MVC的定制配置需要我们的配置类继承一个WebMvcConfigurerAda
  */
 @Configuration
 @EnableWebMvc
+@EnableScheduling    // 开启对异步任务支持
 @ComponentScan("com.lucky")
 public class MvcConfig extends WebMvcConfigurerAdapter {
     @Bean

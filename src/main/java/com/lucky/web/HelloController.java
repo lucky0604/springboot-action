@@ -27,5 +27,9 @@ public class HelloController extends WebMvcConfigurerAdapter {
         registry.addViewController("/toUpload").setViewName("/upload");
         // 配置MessageConverter路由
         registry.addViewController("/converter").setViewName("/converter");
+        // 配置SSE页面映射
+        registry.addViewController("/sse").setViewName("/sse");
+        // 异步SSE页面映射
+        registry.addViewController("/async").setViewName("/async");
     }
 }
